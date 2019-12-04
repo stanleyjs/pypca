@@ -19,6 +19,15 @@ def test_constructor_auto_default_0_params_success():
         assert isinstance(operator, klass)
     assert not(isinstance(operator, tuple(pca.sklearn_pca[2:])))
 
+
+def test_constructor_notdefault_single_base_cls_0_params_success():
+    operator = pca.PCA(base_cls = pca.sklearn_pca[-1],verbose=False)
+    assert isinstance(operator, pca.sklearn_pca[-1])
+    assert isinstance(operator, pca.sklearn_pca[-2])
+
+    #minibatch sparsePCA inherits from sparsepca so we need to ignore sparse pca
+    assert not(isinstance(operator, tuple(pca.sklearn_pca[:-2])))
+
 def test_constructor_auto_1_param_default_success():
     operator = pca.PCA(n_components=1,verbose=False)
     for klass in pca.sklearn_pca[:2]:
